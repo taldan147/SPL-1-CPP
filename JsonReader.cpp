@@ -21,3 +21,4 @@ JsonReader::JsonReader(const std::string &path) {
 nlohmann::json& JsonReader::getJSON() {
     return j_;
 }
+

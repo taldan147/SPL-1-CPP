@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "Graph.h"
+#include "JsonReader.h"
 
 class Agent;
 
@@ -24,11 +25,14 @@ public:
     void enqueueInfected(int);
     int dequeueInfected();
     TreeType getTreeType() const;
+    int getCycleNum();
     
 private:
     Graph g;
     TreeType treeType;
+    int cycleNum;
     std::vector<Agent*> agents;
+    std::vector<std::vector<int>> createGraph(nlohmann::json &json);
 };
 
 #endif
