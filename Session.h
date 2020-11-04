@@ -32,6 +32,7 @@ private:
     TreeType treeType;
     int cycleNum;
     std::vector<Agent*> agents;
+    std::vector<int> infectedQueue;
     std::vector<std::vector<int>> createGraph(nlohmann::json &json);
 };
 

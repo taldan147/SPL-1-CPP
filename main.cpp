@@ -10,7 +10,6 @@ int main(int argc, char** argv){
         return 0;
     }
     JsonReader read(argv[1]);
-    cout<<read.getJSON();
     Session sess(argv[1]);
     sess.simulate();
     return 0;
