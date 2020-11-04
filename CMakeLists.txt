@@ -3,4 +3,4 @@ project(Assignment1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Assignment1 main.cpp Session.cpp Graph.cpp)
+add_executable(Assignment1 main.cpp Session.cpp Graph.cpp Tree.cpp RootTree.cpp)
