@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Session.h"
+#include <queue>
 class Session;
 
 class Tree{
@@ -20,11 +21,13 @@ public:
     const std::vector<Tree*> & getChildren() const;
     void addChild(const Tree& child);
     void addChild(Tree* child);
-    void BFS(const Session &session, const std::vector<std::vector<int>> edges, Tree* parent,std::vector<bool> visited)
+    void BFS(const Session &session, const std::vector<std::vector<int>> edges, Tree* parent,std::vector<bool> visited);
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
-    virtual Tree* clone()=0 ;
+    virtual Tree* clone() const;
+
+
 
 
     virtual ~Tree();
@@ -39,7 +42,7 @@ public:
     CycleTree(int rootLabel, int currCycle);
     CycleTree(const CycleTree& other);
     virtual int traceTree();
-    virtual Tree* clone() ;
+    virtual Tree* clone() const;
 private:
     int currCycle;
 };
@@ -47,17 +50,18 @@ private:
 class MaxRankTree: public Tree{
 public:
     MaxRankTree(int rootLabel);
-    MaxRankTree(MaxRankTree& other);
     virtual int traceTree();
-    virtual Tree* clone() ;
+    virtual Tree* clone() const;
+
+
 };
 
 class RootTree: public Tree{
 public:
     RootTree(int rootLabel);
-    RootTree(RootTree& other);
+
     virtual int traceTree();
-    virtual Tree* clone() ;
+    virtual Tree* clone() const;
 };
 
 #endif

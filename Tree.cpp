@@ -12,31 +12,14 @@ Tree::Tree(int rootLabel) : node(rootLabel), children({}) {
 }
 
 void Tree::addChild(const Tree &child) {
-
+    addChild(child.clone());
 }
 void Tree::addChild(Tree *child) {
     children.push_back(child);
     delete child;
 }
 
-Tree *Tree::createTree(const Session &session, int rootLabel) {
-    Tree* tree;
-    switch (session.getTreeType()) {
-        case Root:
-            tree = new RootTree(rootLabel);
-            return tree;
-        case MaxRank:
-            tree = new MaxRankTree(rootLabel);
-            return tree;
-        case Cycle:
-            tree = new CycleTree(rootLabel, session.getCycle());
-            return tree;
-    }
 
-
-
-    return nullptr;
-}
 
 
 
@@ -48,13 +31,11 @@ Tree::~Tree() {
 }
 
 Tree::Tree(const Tree &other) { // copy constructor
-    node = other.node;
-    children = {};
-    for (int i=0; i<other.children.size(); i++){
-        //Tree* newChild = other.children[i];
-        Tree* newChild = other.children[i]->clone();
-        addChild(*newChild);
-    }
+      node = other.node;
+      children = {};
+      for (int i=0; i<other.getChildren().size(); i++){
+          addChild(other.children[i]->clone());
+      }
 }
 
 
@@ -113,6 +94,22 @@ const int &Tree::getNode() const {
     return node;
 }
 
+Tree *Tree::createTree(const Session &session, int rootLabel) {
+    Tree* tree;
+    switch (session.getTreeType()) {
+        case Root:
+            tree = new RootTree(rootLabel);
+            return tree;
+        case MaxRank:
+            tree = new MaxRankTree(rootLabel);
+            return tree;
+        case Cycle:
+            tree = new CycleTree(rootLabel, session.getCycle());
+            return tree;
+    }
+    return nullptr;
+}
+
 
 CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle) {
 
@@ -129,16 +126,11 @@ int CycleTree::traceTree() {
     }
     return cNode;
 }
-Tree *CycleTree::clone() {
-    Tree* newTree = new CycleTree(this->node, this->currCycle);
-    for (int i=0; i<this->children.size(); i++){
-        Tree* copy = this->children[i]->clone();
-        newTree->addChild(*copy);
-    }
-    return newTree;
+Tree *CycleTree::clone() const{
+    return new CycleTree(*this);
 }
 
-CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(currCycle) {
+CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(currCycle) { //copy constructor
 
 }
 
@@ -146,41 +138,47 @@ MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {
 
 }
 
+
 int MaxRankTree::traceTree() {
-    return 0;
-}
+    int maxRankNode = node;
+    int maxRank = children.size();
+    std::queue<Tree*> q;
+    q.push(this);
+    while (!q.empty()){
+        if (q.front()->getChildren().size()>maxRank) {
+            maxRankNode = q.front()->getNode();
+            maxRank = q.front()->getChildren().size();
+        }
+        for (int i =0; i<q.front()->getChildren().size(); i++){
+            q.push(q.front()->getChildren()[i]);
+        }
+        q.pop();
 
-Tree *MaxRankTree::clone() {
-    Tree* newTree = new MaxRankTree(this->node);
-    for (int i=0; i<this->children.size(); i++){
-        Tree* copy = this->children[i]->clone();
-        newTree->addChild(*copy);
     }
-    return newTree;
+    return maxRankNode;
+
 
 }
 
-MaxRankTree::MaxRankTree(MaxRankTree &other): Tree(other) { // copy constructor M
 
+
+Tree *MaxRankTree::clone() const{
+    return new MaxRankTree(*this);
 }
+
+
 
 RootTree::RootTree(int rootLabel) : Tree(rootLabel) { //finished
 
 }
 
+
+
 int RootTree::traceTree() { // finished
     return node;
 }
 
-Tree *RootTree::clone() {
-    Tree* newTree = new MaxRankTree(this->node);
-    for (int i=0; i<this->children.size(); i++){
-        Tree* copy = this->children[i]->clone();
-        newTree->addChild(*copy);
-    }
-    return newTree;
+Tree *RootTree::clone() const{
+    return new RootTree(*this);
 }
 
-RootTree::RootTree(RootTree &other):Tree(other) { // copy constructor RootTree
-
-};
