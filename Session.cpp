@@ -27,5 +27,13 @@ int Session::dequeueInfected() {
 }
 
 TreeType Session::getTreeType() const {
-    return Root;
+    return ;
+}
+
+const Graph & Session::getGraph() const {
+    return g;
+}
+
+const int &Session::getCycle() const {
+    return cycle;
 }
