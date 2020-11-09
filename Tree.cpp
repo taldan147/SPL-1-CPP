@@ -4,7 +4,7 @@
 #include "Tree.h"
 
 
-Tree::Tree(): node(0), children({}) {} //default constructor
+
 
 
 Tree::Tree(int rootLabel) : node(rootLabel), children({}) {
@@ -24,16 +24,14 @@ void Tree::addChild(Tree *child) {
 
 
 Tree::~Tree() {
-    for (auto i : children){
-        if (i) delete i;
-    }
+    clearChildren();
 
 }
 
-Tree::Tree(const Tree &other) { // copy constructor
-      node = other.node;
-      children = {};
-      for (int i=0; i<other.getChildren().size(); i++){
+
+
+Tree::Tree(const Tree &other) : node(other.node), children({}){ // copy constructor
+      for (int i=0; i<(int)other.getChildren().size(); i++){
           addChild(other.children[i]->clone());
       }
 }
@@ -45,7 +43,7 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
         for (Tree* child : children){
             if (child) delete child;
         }
-        children.clear();
+        clearChildren();
         node = other.node;
         for (Tree* child: other.children){
             Tree* newChild(child);
@@ -55,16 +53,12 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
     return *this;
 }
 
-Tree::Tree(Tree &&other) { // move constructor
-    node = other.node;
-    children = other.children; // Do I need to delete something?!
-
+Tree::Tree(Tree &&other): node(other.node), children(other.children) { // move constructor
+     // Do I need to delete something?!
 }
 // need to check exactly if node and children in the stack
 const Tree &Tree::operator=(Tree && other) { // move assignment operator
-    for (Tree* child : children){
-        if (child) delete child;
-    }
+    clearChildren();
     node = other.node;
     children = other.children;
     return *this;
@@ -72,11 +66,11 @@ const Tree &Tree::operator=(Tree && other) { // move assignment operator
 
 
 // TODO change the argument
-void Tree::BFS(const Session &session, const std::vector<std::vector<int>> edges, Tree* parent,std::vector<bool> visited) {
+void Tree::BFS(const Session &session, const std::vector<std::vector<int>> &edges, Tree* parent,std::vector<bool> visited) {
 
     visited[parent->node] = true;
-    for (int i=0; i<edges.size(); i++ ){
-        if (edges[parent->node][i] == 1 & !visited[i]){
+    for (int i=0; i<(int)edges.size(); i++ ){
+        if (edges[parent->node][i] == 1 && !visited[i]){
             Tree* child = createTree(session, i);
             parent->addChild(child);
             BFS(session, edges, child, visited);
@@ -110,6 +104,13 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     return nullptr;
 }
 
+void Tree::clearChildren() { // delete recursively the Tree
+    for (Tree* child : children){
+        child->clearChildren();
+        if (child) delete child;
+    }
+}
+
 
 CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle) {
 
@@ -120,17 +121,18 @@ int CycleTree::traceTree() {
     int cycle = currCycle;
     Tree* currTree = this;
     std::vector<Tree*> currChildren = currTree->getChildren();
-    while(currChildren.size()>0 & cycle>0){
+    while(cycle>0 && !currChildren.empty() ){
         currTree = currChildren[0];
         cNode = currTree->getNode();
     }
+    delete currTree;
     return cNode;
 }
 Tree *CycleTree::clone() const{
     return new CycleTree(*this);
 }
-
-CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(currCycle) { //copy constructor
+// can we delete this copy constructor??
+CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(other.currCycle) { //copy constructor
 
 }
 
@@ -145,19 +147,17 @@ int MaxRankTree::traceTree() {
     std::queue<Tree*> q;
     q.push(this);
     while (!q.empty()){
-        if (q.front()->getChildren().size()>maxRank) {
+        if ((int)q.front()->getChildren().size()>maxRank) {
             maxRankNode = q.front()->getNode();
             maxRank = q.front()->getChildren().size();
         }
-        for (int i =0; i<q.front()->getChildren().size(); i++){
+        for (int i =0; i<(int)q.front()->getChildren().size(); i++){
             q.push(q.front()->getChildren()[i]);
         }
         q.pop();
 
     }
     return maxRankNode;
-
-
 }
 
 
