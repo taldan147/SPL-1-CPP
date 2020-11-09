@@ -13,6 +13,7 @@ public:
     Agent();
 
     virtual void act(Session& session)=0;
+    virtual Agent* clone()=0 const;
 };
 
 class ContactTracer: public Agent{
@@ -20,6 +21,7 @@ public:
     ContactTracer();
     
     virtual void act(Session& session);
+    virtual Agent* clone() const;
 };
 
 
@@ -28,6 +30,8 @@ public:
     Virus(int nodeInd);
     
     virtual void act(Session& session);
+    virtual Agent* clone() const;
+
 private:
     const int nodeInd;
 };

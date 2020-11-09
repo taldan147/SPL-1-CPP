@@ -51,13 +51,17 @@ const Tree &Tree::operator=(Tree && other) { // move assignment operator
 }
 
 // TODO change the argument
-void Tree::BFS(const Session &session, const std::vector<std::vector<int>> &edges, Tree* parent,std::vector<bool> visited) {
-    visited[parent->node] = true;
-    for (int i=0; i<(int)edges.size(); i++ ){
-        if (edges[parent->node][i] == 1 && !visited[i]){
-            Tree* child = createTree(session, i);
-            parent->addChild(child);
-            BFS(session, edges, child, visited);
+const Tree* Tree::BFS(const Session &session, const std::vector<std::vector<int>> &edges, int root) {
+    std::vector<bool> visited(edges.size(), false);
+    std::queue<Tree*> q;
+    Tree* rootTree = createTree(session,root);
+    q.push(rootTree);
+    visited[root] = true;
+    while (!q.empty()){
+        int currTreeNode = q.front()->getNode();
+        for (int i=0; i<edges.size(); i++){
+            if (edges[currTreeNode][i] == 1 && !visited[i])
+
         }
     }
 }
