@@ -2,7 +2,7 @@
 #define AGENT_H_
 
 #include <vector>
-
+class Session;
 
 class Agent{
 public:
