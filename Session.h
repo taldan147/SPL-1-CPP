@@ -4,11 +4,13 @@
 #include <vector>
 #include <string>
 #include "Graph.h"
+#include "JsonReader.h"
 #include "Agent.h"
-//#include "JsonReader.h"
 #include "json.hpp"
 
 class Agent;
+
+
 
 enum TreeType{
   Cycle,
@@ -21,6 +23,7 @@ public:
     Session(const std::string& path);
     void simulate();
     void addAgent(const Agent& agent);
+    void addAgent(Agent* agent);
     void setGraph(const Graph& graph);
     void enqueueInfected(int);
     int dequeueInfected();
@@ -48,6 +51,5 @@ public:
     Graph getGraph();
     TreeType getType() const;
 };
-
 
 #endif

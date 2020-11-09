@@ -24,3 +24,16 @@ void Graph::infectNode(int nodeInd) {
 bool Graph::isInfected(int nodeInd) {
     return false;
 }
+
+bool Graph::isAllFullyInfected() const {
+
+    return Clean;
+}
+
+std::vector<Graph *> Graph::SplitIntoConnectedComponents() {
+    return std::vector<Graph *>();
+}
+
+spread Graph::isSick(Graph *g) {
+    return Clean;
+}
