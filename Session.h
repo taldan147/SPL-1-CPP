@@ -7,6 +7,7 @@
 #include "Agent.h"
 #include "json.hpp"
 
+
 class Agent;
 
 
@@ -29,6 +30,11 @@ public:
     TreeType getTreeType() const;
     const Graph & getGraph() const;
     const int & getCycleNum() const;
+    const vector<bool>& getSickNodes() const;
+    void infectNode(int nodeToInfect);
+    void spreadVirus(int oldNode);
+    const bool isInfectedQueueEmpty() const;
+    void disconnectNode(int node);
 
 private:
     Graph g;
@@ -36,6 +42,9 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     std::queue<int> infectedQueue;
+    std::vector<bool> sickNodes;
+
+    void spreadVirus(int oldNode);
 };
 
 class JsonReader {

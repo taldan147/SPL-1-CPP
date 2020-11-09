@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Session.h"
+#include "Tree.h"
 
 class Session;
 

@@ -18,7 +18,7 @@ public:
     const std::vector<Tree*> & getChildren() const;
     void addChild(const Tree& child);
     void addChild(Tree* child);
-    const Tree* BFS(const Session &session, const std::vector<std::vector<int>> &edges, int root);
+    void BFS(const Session &session);
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     virtual Tree* clone() const=0;

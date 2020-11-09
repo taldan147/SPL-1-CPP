@@ -8,11 +8,18 @@ Agent::Agent() {
 
 }
 
-ContactTracer::ContactTracer() {
+ContactTracer::ContactTracer() : Agent(){
 
 }
 
 void ContactTracer::act(Session &session) {
+    if (!session.isInfectedQueueEmpty()) {
+        int nodeToTrace = session.dequeueInfected();
+        Tree* root = Tree::createTree(session, nodeToTrace);
+        root->BFS(session);
+        int nodeToDisconnect = root->traceTree();
+        session.disconnectNode(nodeToDisconnect);
+    }
 
 }
 
@@ -20,12 +27,14 @@ Agent *ContactTracer::clone() const {
     return new ContactTracer(*this);
 }
 
-Virus::Virus(int node) : nodeInd(node) {
+Virus::Virus(int node) : Agent(), nodeInd(node) {
 
 }
 
 void Virus::act(Session &session) {
-
+    if (!session.getSickNodes()[nodeInd])
+        session.infectNode(nodeInd);
+    session.spreadVirus(nodeInd);
 }
 
 Agent *Virus::clone() const {

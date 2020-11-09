@@ -7,6 +7,10 @@
 Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix){
 }
 
+int Graph::findNodeToInfect(int node) const {
+
+}
+
 Graph::Graph(std::nullptr_t):edges(){
 
 }
@@ -30,4 +34,8 @@ std::vector<Graph *> Graph::SplitIntoConnectedComponents() {
 
 spread Graph::isSick(Graph *g) {
     return Clean;
+}
+
+Graph &Graph::disconnectNode(int nodeToDisconnect) {
+    return ;
 }

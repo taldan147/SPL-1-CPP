@@ -2,7 +2,7 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(nullptr){
+ Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(nullptr), sickNodes({}){
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType=jsonReader.getType();
@@ -51,6 +51,31 @@ const Graph & Session::getGraph() const {
 
 const int &Session::getCycleNum() const {
     return cycleNum;
+}
+
+const std::vector<bool>& Session::getSickNodes() const {
+    return sickNodes;
+}
+
+void Session::infectNode(int nodeToInfect) {
+    sickNodes[nodeToInfect] = true;
+
+}
+
+void Session::spreadVirus(int oldNode) {
+    int nodeToInfect = g.findNodeToInfect(oldNode);
+    Agent* newVirus = new Virus(nodeToInfect);
+    addAgent(*newVirus);
+    enqueueInfected(nodeToInfect);
+}
+
+const bool Session::isInfectedQueueEmpty() const {
+    return infectedQueue.empty();
+}
+
+void Session::disconnectNode(int node) {
+    Graph &tmp = g.disconnectNode(node);
+    setGraph(tmp);
 }
 
 
