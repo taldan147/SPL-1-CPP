@@ -5,8 +5,8 @@
 #include <string>
 #include "Graph.h"
 #include "JsonReader.h"
+#include "Agent.h"
 
-class Agent;
 
 enum TreeType{
   Cycle,

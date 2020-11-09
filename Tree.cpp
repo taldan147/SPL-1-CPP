@@ -80,7 +80,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
             tree = new MaxRankTree(rootLabel);
             return tree;
         case Cycle:
-            tree = new CycleTree(rootLabel, session.getCycle());
+            tree = new CycleTree(rootLabel, session.getCycleNum());
             return tree;
     }
     return nullptr;

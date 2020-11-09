@@ -8,7 +8,7 @@
 }
 
 void Session::simulate() {
-
+    while ()
 }
 
 void Session::addAgent(const Agent &agent) {
