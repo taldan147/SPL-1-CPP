@@ -28,7 +28,15 @@ int Session::dequeueInfected() {
 }
 
 TreeType Session::getTreeType() const {
-    return Root;
+    return ;
+}
+
+const Graph & Session::getGraph() const {
+    return g;
+}
+
+const int &Session::getCycle() const {
+    return cycle;
 }
 
 std::vector<std::vector<int>> Session::createGraph(nlohmann::json& json) {
