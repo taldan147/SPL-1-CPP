@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <queue>
 #include "Graph.h"
 #include "Agent.h"
 #include "json.hpp"
@@ -20,6 +21,9 @@ enum TreeType{
 class Session{
 public:
     Session(const std::string& path);
+
+    Session(const std::queue<int> &infectedQueue);
+
     void simulate();
     void addAgent(const Agent& agent);
     void addAgent(Agent* agent);
@@ -48,6 +52,7 @@ public:
     nlohmann::json& getJSON();
     Graph getGraph();
     TreeType getType() const;
+    std::vector<Agent*> getAgents() const;
 };
 
 #endif
