@@ -8,7 +8,6 @@
 }
 
 void Session::simulate() {
-
 }
 
 void Session::addAgent(const Agent &agent) {

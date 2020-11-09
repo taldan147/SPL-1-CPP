@@ -4,12 +4,11 @@
 #include <vector>
 #include <string>
 #include "Graph.h"
-#include "JsonReader.h"
 #include "Agent.h"
+//#include "JsonReader.h"
+#include "json.hpp"
 
 class Agent;
-
-
 
 enum TreeType{
   Cycle,
@@ -37,5 +36,18 @@ private:
     std::vector<int> infectedQueue;
     Graph createGraph(nlohmann::json &json);
 };
+
+class JsonReader {
+
+private:
+    nlohmann::json j_;
+
+public:
+    JsonReader(const std::string &path);
+    nlohmann::json& getJSON();
+    Graph getGraph();
+    TreeType getType() const;
+};
+
 
 #endif
