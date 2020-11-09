@@ -24,7 +24,7 @@ nlohmann::json &JsonReader::getJSON() {
 }
 
 TreeType JsonReader::getType() const {
-    std::string tree=j_["tree"].dump();
+    std::string tree=j_["tree"];
     switch (tree[0]) {
         case 'M': {
             return MaxRank;

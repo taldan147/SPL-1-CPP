@@ -10,6 +10,20 @@ int main(int argc, char** argv){
     }
     Session sess(argv[1]);
     sess.getGraph();
+    switch(sess.getTreeType()){
+
+        case Cycle:
+            cout << "Cycle";
+            break;
+        case MaxRank:
+            cout<< "Max";
+            break;
+        case Root:
+            cout<< " root";
+            break;
+        default:
+            cout<< "shit";
+    }
     sess.simulate();
     return 0;
 }

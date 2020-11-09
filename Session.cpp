@@ -5,6 +5,7 @@
  Session::Session(const std::string &path):g(nullptr){
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
+    treeType=jsonReader.getType();
 }
 
 void Session::simulate() {
