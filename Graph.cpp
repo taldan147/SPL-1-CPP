@@ -10,30 +10,35 @@ Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix), size(0){
 
 int Graph::findNodeToInfect(int node) const {
     for (int i=0; i<size; i++){
-        if (node != i && )
+        if (node != i &&  edges[node][i] == 1 && nodesStatuses[i] == Clean)
+            return i;
     }
+    return -1;
 }
 
 
 
 void Graph::infectNode(int nodeInd) {
-
+    nodesStatuses[nodeInd] = Sick;
 }
 
 bool Graph::isInfected(int nodeInd) {
-    return false;
+    return nodesStatuses[nodeInd]!=Clean;
 }
 
 bool Graph::isAllFullyInfected() const {
-
-    return Clean;
+    for (int i=0; i<size; i++){
+        for (int j=i+1; j<size; j++) {
+            if (nodesStatuses[i] != nodesStatuses[j])
+                return false;
+        }
+    }
+    return true;
 }
 
-std::vector<Graph *> Graph::SplitIntoConnectedComponents() {
-    return std::vector<Graph *>();
-}
 
-spread Graph::isSick(Graph *g) {
+
+sicknessStatus Graph::isSick(Graph *g) {
     return Clean;
 }
 
@@ -44,4 +49,14 @@ Graph &Graph::disconnectNode(int nodeToDisconnect) {
         edges[nodeToDisconnect][i];
     }
     return *this;
+}
+
+
+
+const std::vector<std::vector<int>> &Graph::getEdges() const {
+    return edges;
+}
+
+const sicknessStatus Graph::getNodeStatus(int i) const {
+    nodesStatuses[i];
 }

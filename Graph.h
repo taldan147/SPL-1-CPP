@@ -2,10 +2,11 @@
 #define GRAPH_H_
 
 #include <vector>
-enum spread{
-    AllInfected,
-    PartiallyInfected,
-    Clean
+
+enum sicknessStatus{
+    Clean,
+    Infected,
+    Sick
 };
 
 class Graph{
@@ -13,18 +14,24 @@ public:
     Graph(std::vector<std::vector<int>> matrix);
 
 
+
     bool isAllFullyInfected() const;
-    spread isSick(Graph* g);
-    std::vector<Graph*> SplitIntoConnectedComponents();
+    sicknessStatus isSick(Graph* g);
+
 
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
     const std::vector<std::vector<int>> & getEdges() const;
     int findNodeToInfect(int node) const;
     Graph& disconnectNode(int nodeToDisconnect);
+
+    const sicknessStatus getNodeStatus(int i) const;
+
 private:
     std::vector<std::vector<int>> edges;
     int size;
+    std::vector<sicknessStatus> nodesStatuses;
+
 
 };
 
