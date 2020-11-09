@@ -8,28 +8,21 @@ class Session;
 
 class Tree{
 public:
-    Tree();
+
     Tree(int rootLabel); // constructor
     Tree(const Tree &other); // copy constructor
     const Tree& operator=(const Tree& other); // copy assignment operator
     Tree(Tree &&other); // move constructor
-
-
     const Tree& operator=(Tree&& other); // move assignment operator
-
     const int & getNode() const;
     const std::vector<Tree*> & getChildren() const;
     void addChild(const Tree& child);
     void addChild(Tree* child);
-    void BFS(const Session &session, const std::vector<std::vector<int>> edges, Tree* parent,std::vector<bool> visited);
-
+    void BFS(const Session &session, const std::vector<std::vector<int>> &edges, Tree* parent,std::vector<bool> visited);
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
-    virtual Tree* clone() const;
-
-
-
-
+    virtual Tree* clone() const=0;
+    void clearChildren();
     virtual ~Tree();
 
 protected:
@@ -52,14 +45,11 @@ public:
     MaxRankTree(int rootLabel);
     virtual int traceTree();
     virtual Tree* clone() const;
-
-
 };
 
 class RootTree: public Tree{
 public:
     RootTree(int rootLabel);
-
     virtual int traceTree();
     virtual Tree* clone() const;
 };

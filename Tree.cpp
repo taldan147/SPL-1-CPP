@@ -3,13 +3,7 @@
 //
 #include "Tree.h"
 
-
-
-
-
-Tree::Tree(int rootLabel) : node(rootLabel), children({}) {
-
-}
+Tree::Tree(int rootLabel) : node(rootLabel), children({}) {}
 
 void Tree::addChild(const Tree &child) {
     addChild(child.clone());
@@ -19,24 +13,15 @@ void Tree::addChild(Tree *child) {
     delete child;
 }
 
-
-
-
-
 Tree::~Tree() {
     clearChildren();
-
 }
-
-
 
 Tree::Tree(const Tree &other) : node(other.node), children({}){ // copy constructor
       for (int i=0; i<(int)other.getChildren().size(); i++){
           addChild(other.children[i]->clone());
       }
 }
-
-
 
 const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
     if (this != &other){
@@ -56,6 +41,7 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
 Tree::Tree(Tree &&other): node(other.node), children(other.children) { // move constructor
      // Do I need to delete something?!
 }
+
 // need to check exactly if node and children in the stack
 const Tree &Tree::operator=(Tree && other) { // move assignment operator
     clearChildren();
@@ -64,10 +50,8 @@ const Tree &Tree::operator=(Tree && other) { // move assignment operator
     return *this;
 }
 
-
 // TODO change the argument
 void Tree::BFS(const Session &session, const std::vector<std::vector<int>> &edges, Tree* parent,std::vector<bool> visited) {
-
     visited[parent->node] = true;
     for (int i=0; i<(int)edges.size(); i++ ){
         if (edges[parent->node][i] == 1 && !visited[i]){
@@ -76,8 +60,6 @@ void Tree::BFS(const Session &session, const std::vector<std::vector<int>> &edge
             BFS(session, edges, child, visited);
         }
     }
-
-
 }
 
 const std::vector<Tree *> &Tree::getChildren() const{
@@ -111,10 +93,7 @@ void Tree::clearChildren() { // delete recursively the Tree
     }
 }
 
-
-CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle) {
-
-}
+CycleTree::CycleTree(int rootLabel, int currCycle): Tree(rootLabel), currCycle(currCycle) {}
 
 int CycleTree::traceTree() {
     int cNode;
@@ -128,18 +107,15 @@ int CycleTree::traceTree() {
     delete currTree;
     return cNode;
 }
+
 Tree *CycleTree::clone() const{
     return new CycleTree(*this);
 }
+
 // can we delete this copy constructor??
-CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(other.currCycle) { //copy constructor
+CycleTree::CycleTree(const CycleTree &other): Tree(other), currCycle(other.currCycle) { }//copy constructor
 
-}
-
-MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {
-
-}
-
+MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {}
 
 int MaxRankTree::traceTree() {
     int maxRankNode = node;
@@ -155,24 +131,15 @@ int MaxRankTree::traceTree() {
             q.push(q.front()->getChildren()[i]);
         }
         q.pop();
-
     }
     return maxRankNode;
 }
-
-
 
 Tree *MaxRankTree::clone() const{
     return new MaxRankTree(*this);
 }
 
-
-
-RootTree::RootTree(int rootLabel) : Tree(rootLabel) { //finished
-
-}
-
-
+RootTree::RootTree(int rootLabel) : Tree(rootLabel) {} //finished
 
 int RootTree::traceTree() { // finished
     return node;
