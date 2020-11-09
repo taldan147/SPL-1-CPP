@@ -36,7 +36,6 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     std::vector<int> infectedQueue;
-    Graph createGraph(nlohmann::json &json);
 };
 
 class JsonReader {

@@ -13,7 +13,7 @@ public:
     Agent();
 
     virtual void act(Session& session)=0;
-    virtual Agent* clone()=0 const;
+    virtual Agent* clone() const=0;
 };
 
 class ContactTracer: public Agent{

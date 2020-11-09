@@ -2,36 +2,25 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue({}){
+ Session::Session(const std::string &path):g(nullptr){
     JsonReader jsonReader(path);
-    g = createGraph(jsonReader.getJSON());
-
+    g = jsonReader.getGraph();
 }
 
 void Session::simulate() {
-    while (g.isAllFullyInfected()){
-        for (Agent* agent: agents){
-            agent->act(*this);
-        }
-        cycleNum++;
-    }
+
 }
 
 void Session::addAgent(const Agent &agent) {
-    Agent* newAgent = agent.clone();
-    addAgent(newAgent);
-}
 
-void Session::addAgent(Agent* agent){
-    agents.push_back(agent);
 }
 
 void Session::setGraph(const Graph &graph) {
         g=graph;
 }
 
-void Session::enqueueInfected(int infectedNode) {
-    infectedQueue.push_back(infectedNode);
+void Session::enqueueInfected(int) {
+
 }
 
 int Session::dequeueInfected() {
@@ -50,7 +39,4 @@ const int &Session::getCycleNum() const {
     return cycleNum;
 }
 
-Graph Session::createGraph(nlohmann::json& json) {
-    std::vector<std::vector<int>> graph=json["graph"];
-    return graph;
-}
+
