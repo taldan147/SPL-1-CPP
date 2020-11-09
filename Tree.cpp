@@ -58,12 +58,18 @@ const Tree* Tree::BFS(const Session &session, const std::vector<std::vector<int>
     q.push(rootTree);
     visited[root] = true;
     while (!q.empty()){
-        int currTreeNode = q.front()->getNode();
+        Tree* currTree = q.front();
         for (int i=0; i<edges.size(); i++){
-            if (edges[currTreeNode][i] == 1 && !visited[i])
-
+            if (edges[currTree->getNode()][i] == 1 && !visited[i]) {
+                visited[i] = true;
+                Tree* newChild = createTree(session, i);
+                currTree->addChild(newChild);
+                q.push(newChild);
+            }
         }
+        q.pop();
     }
+    return rootTree;
 }
 
 const std::vector<Tree *> &Tree::getChildren() const{

@@ -35,7 +35,7 @@ private:
     int cycleNum;
     TreeType treeType;
     std::vector<Agent*> agents;
-    std::vector<int> infectedQueue;
+    std::queue<int> infectedQueue;
 };
 
 class JsonReader {
