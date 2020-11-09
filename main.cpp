@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Session.h"
-#include "JsonReader.h"
 
 using namespace std;
 
