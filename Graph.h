@@ -12,7 +12,7 @@ class Graph{
 public:
     Graph(std::vector<std::vector<int>> matrix);
 
-    Graph(nullptr_t);
+
     bool isAllFullyInfected() const;
     spread isSick(Graph* g);
     std::vector<Graph*> SplitIntoConnectedComponents();
@@ -24,6 +24,7 @@ public:
     Graph& disconnectNode(int nodeToDisconnect);
 private:
     std::vector<std::vector<int>> edges;
+    int size;
 
 };
 

@@ -4,16 +4,17 @@
 #include "Graph.h"
 #include "iostream"
 
-Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix){
+Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix), size(0){
+    size = (int)edges.size();
 }
 
 int Graph::findNodeToInfect(int node) const {
-
+    for (int i=0; i<size; i++){
+        if (node != i && )
+    }
 }
 
-Graph::Graph(std::nullptr_t):edges(){
 
-}
 
 void Graph::infectNode(int nodeInd) {
 
@@ -37,5 +38,10 @@ spread Graph::isSick(Graph *g) {
 }
 
 Graph &Graph::disconnectNode(int nodeToDisconnect) {
-    return ;
+
+    for (int i=0; i<size; i++){
+        edges[i][nodeToDisconnect]=0;
+        edges[nodeToDisconnect][i];
+    }
+    return *this;
 }

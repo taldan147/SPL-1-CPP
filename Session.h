@@ -18,6 +18,12 @@ enum TreeType{
   Root
 };
 
+enum sicknessStatus{
+    Clean,
+    Infected,
+    Sick
+};
+
 class Session{
 public:
     Session(const std::string& path);
@@ -30,7 +36,7 @@ public:
     TreeType getTreeType() const;
     const Graph & getGraph() const;
     const int & getCycleNum() const;
-    const vector<bool>& getSickNodes() const;
+    const vector<sicknesStatus>& getNodesStatus() const;
     void infectNode(int nodeToInfect);
     void spreadVirus(int oldNode);
     const bool isInfectedQueueEmpty() const;
@@ -42,7 +48,7 @@ private:
     TreeType treeType;
     std::vector<Agent*> agents;
     std::queue<int> infectedQueue;
-    std::vector<bool> sickNodes;
+    std::vector<sicknessStatus> nodesStatuses;
 
     void spreadVirus(int oldNode);
 };

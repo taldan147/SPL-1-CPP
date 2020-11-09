@@ -2,7 +2,7 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(nullptr), sickNodes({}){
+ Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(), nodesStatuses({}){
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType=jsonReader.getType();
@@ -53,17 +53,17 @@ const int &Session::getCycleNum() const {
     return cycleNum;
 }
 
-const std::vector<bool>& Session::getSickNodes() const {
-    return sickNodes;
+const std::vector<sicknessStatus>& Session::getNodesStatus() const {
+    return nodesStatuses;
 }
 
 void Session::infectNode(int nodeToInfect) {
-    sickNodes[nodeToInfect] = true;
+    nodesStatuses[nodeToInfect] = Sick;
 
 }
 
 void Session::spreadVirus(int oldNode) {
-    int nodeToInfect = g.findNodeToInfect(oldNode);
+    int nodeToInfect = g.findNodeToInfect(oldNode, );
     Agent* newVirus = new Virus(nodeToInfect);
     addAgent(*newVirus);
     enqueueInfected(nodeToInfect);

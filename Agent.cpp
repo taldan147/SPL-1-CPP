@@ -32,7 +32,7 @@ Virus::Virus(int node) : Agent(), nodeInd(node) {
 }
 
 void Virus::act(Session &session) {
-    if (!session.getSickNodes()[nodeInd])
+    if (!session.getNodesStatus()[nodeInd]==Sick)
         session.infectNode(nodeInd);
     session.spreadVirus(nodeInd);
 }
