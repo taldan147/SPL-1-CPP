@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "Session.h"
+#include <iostream>
 
 JsonReader::JsonReader(const std::string &path) {
     std::string textRead;
@@ -24,7 +25,7 @@ nlohmann::json &JsonReader::getJSON() {
 }
 
 TreeType JsonReader::getType() const {
-    std::string tree=j_["tree"];
+    std::string tree = j_["tree"];
     switch (tree[0]) {
         case 'M': {
             return MaxRank;
@@ -44,6 +45,20 @@ TreeType JsonReader::getType() const {
 Graph JsonReader::getGraph() {
     std::vector<std::vector<int>> matrix = j_["graph"];
     return Graph(matrix);
+}
+
+std::vector<Agent *> JsonReader::getAgents() const {
+    std::vector<std::pair<std::string, int>> agentList = j_["agents"];
+    std::vector<Agent *> toReturn;
+    for (std::pair<std::string, int> agent: agentList) {
+        if (agent.first.compare("V") == 0) {
+            toReturn.push_back(new Virus(agent.second));
+        }
+        else{
+            toReturn.push_back((new ContactTracer()));
+        }
+    }
+    return toReturn;
 }
 
 

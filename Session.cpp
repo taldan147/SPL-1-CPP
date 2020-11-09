@@ -2,10 +2,11 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(), nodesStatuses({}){
+ Session::Session(const std::string &path):g(nullptr), cycleNum(0), treeType(Root), agents({}), infectedQueue(){
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType=jsonReader.getType();
+    agents=jsonReader.getAgents();
     infectedQueue;
 }
 
