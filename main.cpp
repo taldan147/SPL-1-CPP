@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Session.h"
-#include "JsonReader.h"
 
 using namespace std;
 
@@ -12,7 +11,5 @@ int main(int argc, char** argv){
     JsonReader read(argv[1]);
     Session sess(argv[1]);
     sess.simulate();
-//    int* i=new int(5);
-//    cout << i;
     return 0;
 }
