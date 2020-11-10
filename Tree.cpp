@@ -26,10 +26,11 @@ Tree::Tree(const Tree &other) : node(other.node), children({}) { // copy constru
 const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
     if (this != &other) {
         clearChildren();
+        children.clear();
         node = other.node;
         for (Tree *child: other.children) {
-            Tree *newChild(child);
-            addChild(*newChild);
+//            Tree *newChild(child);
+            addChild(child);
         }
     }
     return *this;

@@ -21,19 +21,20 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeT
 const Session &Session::operator=(const Session &other) { // copy assignment operator
     if (this != &other){
         clearAgents();
+        agents.clear();
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
         for (Agent* agent : other.agents){
-            Agent *newAgent(agent);
-            addAgent(*newAgent);
+            //Agent *newAgent(agent);
+            addAgent(agent);
         }
     }
     return *this;
 }
 
-Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), infectedQueue(other.infectedQueue), agents(other.agents) { //move constructors
+Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), agents(other.agents), infectedQueue(other.infectedQueue) { //move constructors
 
 }
 
@@ -107,8 +108,7 @@ void Session::spreadVirus(int oldNode) {
 //        addAgent(*newVirus);
 //      changed the above to the below, saves a memory leak somehow
         addAgent(newVirus);
-        enqueueInfected(nodeToInfect);
-        g.infectNode(nodeToInfect);
+        infectNode(nodeToInfect);
     }
 }
 
