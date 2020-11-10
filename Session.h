@@ -77,12 +77,12 @@ public:
     Graph getGraph();
 
     TreeType getType() const;
-    std::vector<Agent *> getAgents() const;
+
+    void getAgents(Session &sess) const;
 };
 
 class JsonWriter {
 public:
-    JsonWriter();
     static void writeJson(Graph g,const std::vector<int>&,const std::string &);
 };
 

@@ -8,6 +8,10 @@ Agent::Agent() {
 
 }
 
+Agent::~Agent() {
+
+}
+
 ContactTracer::ContactTracer() : Agent(){
 
 }

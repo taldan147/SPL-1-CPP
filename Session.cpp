@@ -6,16 +6,16 @@
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType=jsonReader.getType();
-    agents=jsonReader.getAgents();
-    infectedQueue;
+    jsonReader.getAgents(*this);
 }
 
 
 
 void Session::simulate() {
     while (g.isAllFullyInfected()){
-        for (Agent* agent: agents){
-            agent->act(*this);
+        int currAgentSize = (int)agents.size();
+        for (int i=0; i<currAgentSize; i++){
+            agents[i]->act(*this);
         }
         cycleNum++;
     }
@@ -25,7 +25,7 @@ void Session::simulate() {
 
 void Session::addAgent(const Agent &agent) {
     Agent* newAgent = agent.clone();
-    addAgent(newAgent);
+    agents.push_back(newAgent);
 }
 
 void Session::addAgent(Agent* agent){
@@ -88,7 +88,8 @@ sicknessStatus Session::getNodeStatus(int node) const {
 }
 
 Session::~Session() {
-    for (auto & agent : agents) {
+    for (Agent * agent : agents) {
+//        if(agent)
         delete agent;
     }
 

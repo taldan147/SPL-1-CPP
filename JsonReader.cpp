@@ -47,18 +47,18 @@ Graph JsonReader::getGraph() {
     return Graph(matrix);
 }
 
-std::vector<Agent *> JsonReader::getAgents() const {
+void JsonReader::getAgents(Session& sess) const {
     std::vector<std::pair<std::string, int>> agentList = j_["agents"];
     std::vector<Agent *> toReturn;
     for (std::pair<std::string, int> agent: agentList) {
         if (agent.first.compare("V") == 0) {
-            toReturn.push_back(new Virus(agent.second));
+            sess.addAgent(new Virus(agent.second));
+            sess.enqueueInfected(agent.second);
         }
         else{
-            toReturn.push_back((new ContactTracer()));
+            sess.addAgent(new ContactTracer);
         }
     }
-    return toReturn;
 }
 
 void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes,const std::string &path) {
