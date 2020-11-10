@@ -15,9 +15,38 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeT
     for (int i=0; i<agentSize; i++){
         addAgent(*other.agents[i]->clone());
     }
+}
+
+const Session &Session::operator=(const Session &other) { // copy assignment operator
+    if (this != &other){
+        clearAgents();
+        g = other.g;
+        cycleNum = other.cycleNum;
+        treeType = other.treeType;
+        infectedQueue = other.infectedQueue;
+        for (Agent* agent : other.agents){
+            Agent *newAgent(agent);
+            addAgent(*newAgent);
+        }
+    }
+    return *this;
+}
+
+Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), infectedQueue(other.infectedQueue), agents(other.agents) { //move constructors
 
 }
 
+const Session &Session::operator=(Session &&other) { // move assignment operator
+    if (this != &other){
+        clearAgents();
+        g = other.g;
+        cycleNum = other.cycleNum;
+        treeType = other.treeType;
+        infectedQueue = other.infectedQueue;
+        agents = other.agents;
+    }
+    return *this;
+}
 
 void Session::simulate() {
     while (g.isAllFullyInfected()){
@@ -96,16 +125,24 @@ sicknessStatus Session::getNodeStatus(int node) const {
 }
 
 Session::~Session() {
-    for (Agent * agent : agents) {
-//        if(agent)
-        delete agent;
-    }
-
+    clearAgents();
 }
 
 const std::queue<int> &Session::getInfectedQueue() const {
     return infectedQueue;
 }
+
+void Session::clearAgents() {
+    for (Agent *agent : agents) {
+        if (agent) delete agent;
+    }
+}
+
+
+
+
+
+
 
 
 

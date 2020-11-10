@@ -22,7 +22,13 @@ class Session {
 public:
     Session(const std::string &path);
 
-    Session(const Session &other);
+    Session(const Session &other);// copy constructor
+
+    const Session& operator=(const Session& other); // assignment operator
+
+    Session(Session &&other); // move constructor
+
+    const Session& operator=(Session&& other); // move assignment operator
 
     //Session(const std::queue<int> &infectedQueue);
 
@@ -53,6 +59,8 @@ public:
     void spreadVirus(int oldNode);
 
     const bool isInfectedQueueEmpty() const;
+
+    void clearAgents();
 
     void disconnectNode(int node);
     ~Session();

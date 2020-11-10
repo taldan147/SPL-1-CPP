@@ -25,9 +25,6 @@ Tree::Tree(const Tree &other) : node(other.node), children({}) { // copy constru
 
 const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
     if (this != &other) {
-        for (Tree *child : children) {
-            if (child) delete child;
-        }
         clearChildren();
         node = other.node;
         for (Tree *child: other.children) {
@@ -44,9 +41,11 @@ Tree::Tree(Tree &&other) : node(other.node), children(other.children) { // move 
 
 // need to check exactly if node and children in the stack
 const Tree &Tree::operator=(Tree &&other) { // move assignment operator
-    clearChildren();
-    node = other.node;
-    children = other.children;
+    if (this != &other){
+        clearChildren();
+        node = other.node;
+        children = other.children;
+    }
     return *this;
 }
 
