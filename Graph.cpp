@@ -68,5 +68,5 @@ std::vector<int> Graph::getSickNodes() const {
         if(nodesStatuses[i]==Sick)
             toReturn.push_back(i);
     }
-    return std::vector<int>();
+    return toReturn;
 }
