@@ -34,7 +34,6 @@ bool Graph::isAllFullyInfected() const {
     for (int i = 0; i < size; i++) {
         for (int j = i + 1; j < size; j++) {
             if (edges[i][j] == 1 && nodesStatuses[i] != nodesStatuses[j])
-//            if (nodesStatuses[i] != nodesStatuses[j])
                 return false;
         }
     }
@@ -61,7 +60,7 @@ const std::vector<std::vector<int>> &Graph::getEdges() const {
 }
 
 const sicknessStatus Graph::getNodeStatus(int i) const {
-    nodesStatuses[i];
+    return nodesStatuses[i];
 }
 
 std::vector<int> Graph::getSickNodes() const {
