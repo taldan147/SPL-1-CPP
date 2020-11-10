@@ -20,7 +20,7 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeT
 
 
 void Session::simulate() {
-    while (g.isAllFullyInfected()){
+    while (!g.isAllFullyInfected()){
         int currAgentSize = (int)agents.size();
         for (int i=0; i<currAgentSize; i++){
             agents[i]->act(*this);
@@ -67,18 +67,19 @@ const int &Session::getCycleNum() const {
 }
 
 void Session::infectNode(int nodeToInfect) {
+    enqueueInfected(nodeToInfect);
     g.infectNode(nodeToInfect);
 }
 
 void Session::spreadVirus(int oldNode) {
     int nodeToInfect = g.findNodeToInfect(oldNode);
+
     if (nodeToInfect != -1){
         Agent* newVirus = new Virus(nodeToInfect);
 //        addAgent(*newVirus);
 //      changed the above to the below, saves a memory leak somehow
         addAgent(newVirus);
-        enqueueInfected(nodeToInfect);
-        g.infectNode(nodeToInfect);
+        infectNode(nodeToInfect);
     }
 }
 
@@ -105,6 +106,10 @@ Session::~Session() {
 
 const std::queue<int> &Session::getInfectedQueue() const {
     return infectedQueue;
+}
+
+void Session::sickenNode(int sickNode) {
+        g.sickenNode(sickNode);
 }
 
 

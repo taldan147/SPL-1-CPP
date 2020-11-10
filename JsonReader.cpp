@@ -53,7 +53,7 @@ void JsonReader::getAgents(Session& sess) const {
     for (std::pair<std::string, int> agent: agentList) {
         if (agent.first.compare("V") == 0) {
             sess.addAgent(new Virus(agent.second));
-            sess.enqueueInfected(agent.second);
+            sess.infectNode(agent.second);
         }
         else{
             sess.addAgent(new ContactTracer);
@@ -63,7 +63,7 @@ void JsonReader::getAgents(Session& sess) const {
 
 void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes) {
         nlohmann::json output=nlohmann::json{{"graph",g.getEdges()},{"infected",sickNodes}};
-    std::ofstream o("~/CLionProjects/output/output.json");
+    std::ofstream o("./output.json");
     o << output.dump()<<std::endl;
     std::cout<<output.dump();
     o.close();
