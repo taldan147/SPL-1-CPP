@@ -65,6 +65,8 @@ public:
     void disconnectNode(int node);
     ~Session();
 
+    void sickenNode(int sickNode);
+
 private:
     Graph g;
     int cycleNum;

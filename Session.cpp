@@ -2,17 +2,18 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g({}), cycleNum(0), treeType(Root), agents({}), infectedQueue(){
+Session::Session(const std::string &path) : g({}), cycleNum(0), treeType(Root), agents({}), infectedQueue() {
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
-    treeType=jsonReader.getType();
+    treeType = jsonReader.getType();
     jsonReader.getAgents(*this);
 }
 
 //copy cunstructor
-Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeType(other.getTreeType()), agents({}), infectedQueue(other.getInfectedQueue()) {
-    int agentSize = (int)other.agents.size();
-    for (int i=0; i<agentSize; i++){
+Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeType(other.getTreeType()), agents({}),
+                                         infectedQueue(other.getInfectedQueue()) {
+    int agentSize = (int) other.agents.size();
+    for (int i = 0; i < agentSize; i++) {
         addAgent(*other.agents[i]->clone());
     }
 }
@@ -36,41 +37,30 @@ Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeTyp
 
 }
 
-const Session &Session::operator=(Session &&other) { // move assignment operator
-    if (this != &other){
-        clearAgents();
-        g = other.g;
-        cycleNum = other.cycleNum;
-        treeType = other.treeType;
-        infectedQueue = other.infectedQueue;
-        agents = other.agents;
-    }
-    return *this;
-}
 
 void Session::simulate() {
-    while (g.isAllFullyInfected()){
-        int currAgentSize = (int)agents.size();
-        for (int i=0; i<currAgentSize; i++){
+    while (!g.isAllFullyInfected()) {
+        int currAgentSize = (int) agents.size();
+        for (int i = 0; i < currAgentSize; i++) {
             agents[i]->act(*this);
         }
         cycleNum++;
     }
 
-    JsonWriter::writeJson(g,g.getSickNodes());
+    JsonWriter::writeJson(g, g.getSickNodes());
 }
 
 void Session::addAgent(const Agent &agent) {
-    Agent* newAgent = agent.clone();
+    Agent *newAgent = agent.clone();
     agents.push_back(newAgent);
 }
 
-void Session::addAgent(Agent* agent){
+void Session::addAgent(Agent *agent) {
     agents.push_back(agent);
 }
 
 void Session::setGraph(const Graph &graph) {
-        g=graph;
+    g = graph;
 }
 
 void Session::enqueueInfected(int infectedNode) {
@@ -138,11 +128,10 @@ void Session::clearAgents() {
     }
 }
 
-
-
-
-
-
+void Session::sickenNode(int sickNode) {
+    g.sickenNode(sickNode);
+    enqueueInfected(sickNode);
+}
 
 
 

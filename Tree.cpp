@@ -53,8 +53,8 @@ const Tree &Tree::operator=(Tree &&other) { // move assignment operator
 void Tree::BFS(const Session &session) {
     std::vector<std::vector<int>> edges = session.getGraph().getEdges();
     std::vector<bool> visited(edges.size(), false);
-    std::queue<Tree*> q;
-    Tree* currTree;
+    std::queue<Tree *> q;
+    Tree *currTree;
     q.push(this);
     visited[node] = true;
     while (!q.empty()) {
@@ -96,25 +96,29 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
 }
 
 void Tree::clearChildren() { // delete recursively the Tree
-    int size=(int)children.size();
+    int size = (int) children.size();
     for (int i = 0; i < size; i++) {
         delete children[i];
-        children[i]= nullptr;
+        children[i] = nullptr;
     }
 }
 
 CycleTree::CycleTree(int rootLabel, int currCycle) : Tree(rootLabel), currCycle(currCycle) {}
 
 int CycleTree::traceTree() {
-    int cNode;
+    int cNode=-1;
     int cycle = currCycle;
     Tree *currTree = this;
     std::vector<Tree *> currChildren = currTree->getChildren();
     while (cycle > 0 && !currChildren.empty()) {
         currTree = currChildren[0];
+        currChildren=currTree->getChildren();
         cNode = currTree->getNode();
+        cycle--;
     }
-    delete currTree;
+    if (cNode == -1) {
+        cNode = node;
+    }
     return cNode;
 }
 

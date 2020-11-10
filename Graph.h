@@ -32,12 +32,13 @@ public:
     std::vector<int> getSickNodes() const;
 
 
+    void sickenNode(int nodeInd);
 private:
     std::vector<std::vector<int>> edges;
     int size;
+
+
     std::vector<sicknessStatus> nodesStatuses;
-
-
 };
 
 #endif
