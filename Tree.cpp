@@ -50,7 +50,7 @@ const Tree &Tree::operator=(Tree &&other) { // move assignment operator
     return *this;
 }
 
-// TODO change the argument
+
 void Tree::BFS(const Session &session) {
     std::vector<std::vector<int>> edges = session.getGraph().getEdges();
     std::vector<bool> visited(edges.size(), false);

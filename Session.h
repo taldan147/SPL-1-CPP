@@ -22,7 +22,9 @@ class Session {
 public:
     Session(const std::string &path);
 
-    Session(const std::queue<int> &infectedQueue);
+    Session(const Session &other);
+
+    //Session(const std::queue<int> &infectedQueue);
 
     void simulate();
 
@@ -42,6 +44,8 @@ public:
 
     const int &getCycleNum() const;
 
+    const std::queue<int> &getInfectedQueue() const;
+
     sicknessStatus getNodeStatus(int) const;
 
     void infectNode(int nodeToInfect);
@@ -59,7 +63,7 @@ private:
     TreeType treeType;
     std::vector<Agent *> agents;
     std::queue<int> infectedQueue;
-    const std::string &path;
+
 };
 
 class JsonReader {
@@ -83,7 +87,7 @@ public:
 
 class JsonWriter {
 public:
-    static void writeJson(Graph g,const std::vector<int>&,const std::string &);
+    static void writeJson(Graph g,const std::vector<int>&);
 };
 
 #endif

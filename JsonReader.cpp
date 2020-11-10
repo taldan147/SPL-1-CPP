@@ -61,7 +61,7 @@ void JsonReader::getAgents(Session& sess) const {
     }
 }
 
-void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes,const std::string &path) {
+void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes) {
         nlohmann::json output=nlohmann::json{{"graph",g.getEdges()},{"infected",sickNodes}};
     std::ofstream o("~/CLionProjects/output/output.json");
     o << output.dump()<<std::endl;
