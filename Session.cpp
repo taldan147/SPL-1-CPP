@@ -37,6 +37,17 @@ Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeTyp
 
 }
 
+const Session &Session::operator=(Session &&other) {
+    if (this != &other){
+        clearAgents();
+        g = other.g;
+        cycleNum = other.cycleNum;
+        treeType = other.treeType;
+        infectedQueue = other.infectedQueue;
+        agents = other.agents;
+    }
+    return *this;
+}
 
 void Session::simulate() {
     while (!g.isAllFullyInfected()) {
@@ -132,6 +143,8 @@ void Session::sickenNode(int sickNode) {
     g.sickenNode(sickNode);
     enqueueInfected(sickNode);
 }
+
+
 
 
 
