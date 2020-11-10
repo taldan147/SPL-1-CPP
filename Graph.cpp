@@ -4,8 +4,9 @@
 #include "Graph.h"
 #include "iostream"
 
-Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix), size(0){
+Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix), size(0),nodesStatuses({}){
     size = (int)edges.size();
+    nodesStatuses=std::vector<sicknessStatus>(size);
 }
 
 int Graph::findNodeToInfect(int node) const {
@@ -59,4 +60,13 @@ const std::vector<std::vector<int>> &Graph::getEdges() const {
 
 const sicknessStatus Graph::getNodeStatus(int i) const {
     nodesStatuses[i];
+}
+
+std::vector<int> Graph::getSickNodes() const {
+    std::vector<int> toReturn;
+    for (int i = 0; i < size; ++i) {
+        if(nodesStatuses[i]==Sick)
+            toReturn.push_back(i);
+    }
+    return std::vector<int>();
 }

@@ -2,13 +2,15 @@
 //
 // Created by spl211 on 04/11/2020.
 //
- Session::Session(const std::string &path):g({}), cycleNum(0), treeType(Root), agents({}), infectedQueue(){
+ Session::Session(const std::string &path):g({}), cycleNum(0), treeType(Root), agents({}), infectedQueue(),path(path){
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType=jsonReader.getType();
     agents=jsonReader.getAgents();
     infectedQueue;
 }
+
+
 
 void Session::simulate() {
     while (g.isAllFullyInfected()){
@@ -17,6 +19,8 @@ void Session::simulate() {
         }
         cycleNum++;
     }
+
+    JsonWriter::writeJson(g,g.getSickNodes(),path);
 }
 
 void Session::addAgent(const Agent &agent) {
