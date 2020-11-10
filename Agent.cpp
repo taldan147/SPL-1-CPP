@@ -19,6 +19,8 @@ void ContactTracer::act(Session &session) {
         root->BFS(session);
         int nodeToDisconnect = root->traceTree();
         session.disconnectNode(nodeToDisconnect);
+        //deletes the BFS tree after we disconnect the node
+        delete root;
     }
 
 }

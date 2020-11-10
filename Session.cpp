@@ -66,7 +66,9 @@ void Session::spreadVirus(int oldNode) {
     int nodeToInfect = g.findNodeToInfect(oldNode);
     if (nodeToInfect != -1){
         Agent* newVirus = new Virus(nodeToInfect);
-        addAgent(*newVirus);
+//        addAgent(*newVirus);
+//      changed the above to the below, saves a memory leak somehow
+        addAgent(newVirus);
         enqueueInfected(nodeToInfect);
         g.infectNode(nodeToInfect);
     }
@@ -84,5 +86,13 @@ void Session::disconnectNode(int node) {
 sicknessStatus Session::getNodeStatus(int node) const {
     return g.getNodeStatus(node);
 }
+
+Session::~Session() {
+    for (auto & agent : agents) {
+        delete agent;
+    }
+
+}
+
 
 
