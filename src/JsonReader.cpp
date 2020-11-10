@@ -40,6 +40,7 @@ TreeType JsonReader::getType() const {
             break;
         }
     }
+    return Root;
 }
 
 Graph JsonReader::getGraph() {

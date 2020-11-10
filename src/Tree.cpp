@@ -54,6 +54,7 @@ const Tree &Tree::operator=(Tree &&other) { // move assignment operator
 
 void Tree::BFS(const Session &session) {
     std::vector<std::vector<int>> edges = session.getGraph().getEdges();
+    int size=(int)edges.size();
     std::vector<bool> visited(edges.size(), false);
     std::queue<Tree *> q;
     Tree *currTree;
@@ -62,7 +63,7 @@ void Tree::BFS(const Session &session) {
     while (!q.empty()) {
         currTree = q.front();
         q.pop();
-        for (int i = 0; i < edges.size(); i++) {
+        for (int i = 0; i < size; i++) {
             if (edges[currTree->getNode()][i] == 1 && !visited[i]) {
                 visited[i] = true;
                 Tree *newChild = createTree(session, i);
