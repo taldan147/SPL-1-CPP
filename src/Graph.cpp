@@ -1,7 +1,7 @@
 //
 // Created by spl211 on 04/11/2020.
 //
-#include "Graph.h"
+#include "../include/Graph.h"
 #include "iostream"
 
 Graph::Graph(std::vector<std::vector<int>> matrix) : edges(matrix), size(0), nodesStatuses({}) {

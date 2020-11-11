@@ -3,7 +3,7 @@
 //
 
 #include <fstream>
-#include "Session.h"
+#include "../include/Session.h"
 #include <iostream>
 
 JsonReader::JsonReader(const std::string &path) {

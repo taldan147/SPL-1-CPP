@@ -2,7 +2,7 @@
 // Created by spl211 on 09/11/2020.
 //
 
-#include "Agent.h"
+#include "../include/Agent.h"
 
 Agent::Agent() {
 
