@@ -68,7 +68,7 @@ void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes) {
         nlohmann::json output=nlohmann::json{{"graph",g.getEdges()},{"infected",sickNodes}};
     std::ofstream o("./output.json");
     o << output.dump()<<std::endl;
-    std::cout<<output.dump();
+//    std::cout<<output.dump();
     o.close();
 }
 
