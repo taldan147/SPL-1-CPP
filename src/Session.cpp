@@ -27,14 +27,14 @@ const Session &Session::operator=(const Session &other) { // copy assignment ope
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
         for (Agent* agent : other.agents){
-            //Agent *newAgent(agent);
-            addAgent(agent);
+            Agent *newAgent(agent);
+            addAgent(*newAgent);
         }
     }
     return *this;
 }
 
-Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), agents(other.agents), infectedQueue(other.infectedQueue) { //move constructors
+Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), infectedQueue(other.infectedQueue), agents(other.agents) { //move constructors
 
 }
 
