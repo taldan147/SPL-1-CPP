@@ -62,7 +62,7 @@ void Tree::BFS(const Session &session) {
     while (!q.empty()) {
         currTree = q.front();
         q.pop();
-        for (int i = 0; i < edges.size(); i++) {
+        for (int i = 0; i < (int)edges.size(); i++) {
             if (edges[currTree->getNode()][i] == 1 && !visited[i]) {
                 visited[i] = true;
                 Tree *newChild = createTree(session, i);
