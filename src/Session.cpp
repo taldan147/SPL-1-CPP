@@ -1,8 +1,9 @@
 #include "../include/Session.h"
+
 //
 // Created by spl211 on 04/11/2020.
 //
-Session::Session(const std::string &path) : g({}), cycleNum(0),treeType(Root), agents({}),infectedQueue()   {
+Session::Session(const std::string &path) : g({}), cycleNum(0), treeType(Root), agents({}), infectedQueue() {
     JsonReader jsonReader(path);
     g = jsonReader.getGraph();
     treeType = jsonReader.getType();
@@ -10,7 +11,8 @@ Session::Session(const std::string &path) : g({}), cycleNum(0),treeType(Root), a
 }
 
 //copy cunstructor
-Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cycleNum), treeType(other.getTreeType()), agents({}),
+Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cycleNum), treeType(other.getTreeType()),
+                                         agents({}),
                                          infectedQueue(other.getInfectedQueue()) {
     int agentSize = (int) other.agents.size();
     for (int i = 0; i < agentSize; i++) {
@@ -19,14 +21,14 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cyc
 }
 
 const Session &Session::operator=(const Session &other) { // copy assignment operator
-    if (this != &other){
+    if (this != &other) {
         clearAgents();
         agents.clear();
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
-        for (Agent* agent : other.agents){
+        for (Agent *agent : other.agents) {
             Agent *newAgent(agent);
             addAgent(*newAgent);
         }
@@ -34,12 +36,13 @@ const Session &Session::operator=(const Session &other) { // copy assignment ope
     return *this;
 }
 
-Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), infectedQueue(other.infectedQueue), agents(other.agents) { //move constructors
+Session::Session(Session &&other) : g(other.g), cycleNum(other.cycleNum), treeType(other.treeType),
+                                    infectedQueue(other.infectedQueue), agents(other.agents) { //move constructors
 
 }
 
 const Session &Session::operator=(Session &&other) { //move assignment operator
-    if (this != &other){
+    if (this != &other) {
         clearAgents();
         agents.clear();
         g = other.g;
@@ -52,13 +55,13 @@ const Session &Session::operator=(Session &&other) { //move assignment operator
 }
 
 void Session::simulate() {
-    while (!g.isAllFullyInfected()) {
+    do {
         int currAgentSize = (int) agents.size();
         for (int i = 0; i < currAgentSize; i++) {
             agents[i]->act(*this);
         }
         cycleNum++;
-    }
+    } while (!g.isAllFullyInfected());
 
     JsonWriter::writeJson(g, g.getSickNodes());
 }
@@ -90,7 +93,7 @@ TreeType Session::getTreeType() const {
     return treeType;
 }
 
-const Graph & Session::getGraph() const {
+const Graph &Session::getGraph() const {
     return g;
 }
 
@@ -104,8 +107,8 @@ void Session::infectNode(int nodeToInfect) {
 
 void Session::spreadVirus(int oldNode) {
     int nodeToInfect = g.findNodeToInfect(oldNode);
-    if (nodeToInfect != -1){
-        Agent* newVirus = new Virus(nodeToInfect);
+    if (nodeToInfect != -1) {
+        Agent *newVirus = new Virus(nodeToInfect);
 //        addAgent(*newVirus);
 //      changed the above to the below, saves a memory leak somehow
         addAgent(newVirus);
