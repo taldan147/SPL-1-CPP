@@ -6,7 +6,9 @@
 #include "../include/Session.h"
 #include <iostream>
 
-JsonReader::JsonReader(const std::string &path) {
+
+
+JsonReader::JsonReader(const std::string &path) : j_() {
     std::string textRead;
     std::string jsonString = "";
     std::ifstream MyReadFile(path);
@@ -40,7 +42,7 @@ TreeType JsonReader::getType() const {
             break;
         }
     }
-    return Root;
+    return  Root;
 }
 
 Graph JsonReader::getGraph() {
