@@ -10,7 +10,7 @@ Session::Session(const std::string &path) : g({}), cycleNum(0), treeType(Root), 
 }
 
 //copy cunstructor
-Session::Session(const Session &other) : g(other.getGraph()), cycleNum(0), treeType(other.getTreeType()), agents({}),
+Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cycleNum), treeType(other.getTreeType()), agents({}),
                                          infectedQueue(other.getInfectedQueue()) {
     int agentSize = (int) other.agents.size();
     for (int i = 0; i < agentSize; i++) {
@@ -38,9 +38,10 @@ Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeTyp
 
 }
 
-const Session &Session::operator=(Session &&other) {
+const Session &Session::operator=(Session &&other) { //move assignment operator
     if (this != &other){
         clearAgents();
+        agents.clear();
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;

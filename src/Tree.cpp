@@ -44,6 +44,7 @@ Tree::Tree(Tree &&other) : node(other.node), children(other.children) { // move 
 const Tree &Tree::operator=(Tree &&other) { // move assignment operator
     if (this != &other){
         clearChildren();
+        children.clear();
         node = other.node;
         children = other.children;
     }
