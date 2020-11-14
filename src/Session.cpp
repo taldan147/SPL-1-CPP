@@ -44,12 +44,16 @@ Session::Session(Session &&other) : g(other.g), cycleNum(other.cycleNum), treeTy
 const Session &Session::operator=(Session &&other) { //move assignment operator
     if (this != &other) {
         clearAgents();
-        agents.clear();
+//        agents.clear();
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
         agents = other.agents;
+        int agentSize=(int)agents.size();
+        for (int i = 0; i <agentSize; ++i) {
+            other.agents[i]= nullptr;
+        }
     }
     return *this;
 }

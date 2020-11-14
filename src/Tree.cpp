@@ -43,10 +43,15 @@ Tree::Tree(Tree &&other) : node(other.node), children(other.children) { // move 
 // need to check exactly if node and children in the stack
 const Tree &Tree::operator=(Tree &&other) { // move assignment operator
     if (this != &other){
-        clearChildren();
-        children.clear();
         node = other.node;
+        clearChildren();
+//        children.clear();
+
         children = other.children;
+        int childrenSize=(int)children.size();
+        for (int i = 0; i <childrenSize; ++i) {
+            other.children[i]= nullptr;
+        }
     }
     return *this;
 }
@@ -104,6 +109,10 @@ void Tree::clearChildren() { // delete recursively the Tree
         delete children[i];
         children[i] = nullptr;
     }
+}
+
+int Tree::getRootLabel() {
+    return node;
 }
 
 CycleTree::CycleTree(int rootLabel, int currCycle) : Tree(rootLabel), currCycle(currCycle) {}

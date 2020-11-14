@@ -24,6 +24,9 @@ bin/Tree.o: src/Tree.cpp
 bin/Graph.o: src/Graph.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Graph.o src/Graph.cpp
 
+bin/Tester.o: src/Tester.cpp
+    g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Tester.o src/Tester.cpp
+
 
 
 

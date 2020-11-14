@@ -24,6 +24,7 @@ public:
     virtual Tree* clone() const=0;
     void clearChildren();
     virtual ~Tree();
+    int getRootLabel();
 
 protected:
     int node;
