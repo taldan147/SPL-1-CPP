@@ -26,7 +26,6 @@ Tree::Tree(const Tree &other) : node(other.node), children({}) { // copy constru
 const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
     if (this != &other) {
         clearChildren();
-        children.clear();
         node = other.node;
         for (Tree *child: other.children) {
 //            Tree *newChild(child);
@@ -37,16 +36,22 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
 }
 
 Tree::Tree(Tree &&other) : node(other.node), children(other.children) { // move constructor
-    // Do I need to delete something?!
+//    for (Tree* child : other.children){
+//        child = nullptr;
+//    }
+    other.children.clear(); // is necessary?!
 }
 
 // need to check exactly if node and children in the stack
 const Tree &Tree::operator=(Tree &&other) { // move assignment operator
     if (this != &other){
         clearChildren();
-        children.clear();
         node = other.node;
         children = other.children;
+//        for (Tree* child : other.children){
+//            child = nullptr;
+//        }
+        other.children.clear();
     }
     return *this;
 }
@@ -102,7 +107,12 @@ void Tree::clearChildren() { // delete recursively the Tree
     for (int i = 0; i < size; i++) {
         delete children[i];
         children[i] = nullptr;
+        children.clear();
     }
+}
+
+const int &Tree::getRootLabel() const {
+    return node;
 }
 
 CycleTree::CycleTree(int rootLabel, int currCycle) : Tree(rootLabel), currCycle(currCycle) {}
@@ -128,8 +138,8 @@ Tree *CycleTree::clone() const {
     return new CycleTree(*this);
 }
 
-// can we delete this copy constructor??
-CycleTree::CycleTree(const CycleTree &other) : Tree(other), currCycle(other.currCycle) {}//copy constructor
+//// can we delete this copy constructor??
+//CycleTree::CycleTree(const CycleTree &other) : Tree(other), currCycle(other.currCycle) {}//copy constructor
 
 MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {}
 

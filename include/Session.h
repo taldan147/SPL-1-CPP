@@ -31,8 +31,6 @@ public:
 
     const Session& operator=(Session&& other); // move assignment operator
 
-    //Session(const std::queue<int> &infectedQueue);
-
     void simulate();
 
     void addAgent(const Agent &agent);
@@ -63,10 +61,14 @@ public:
 
     void clearAgents();
 
+    void clearQueue(std::queue<int>&);
+
     void disconnectNode(int node);
     ~Session();
 
     void sickenNode(int sickNode);
+
+
 
 private:
     Graph g;

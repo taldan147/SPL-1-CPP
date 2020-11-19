@@ -21,7 +21,7 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cyc
 const Session &Session::operator=(const Session &other) { // copy assignment operator
     if (this != &other){
         clearAgents();
-        agents.clear();
+
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
@@ -35,37 +35,46 @@ const Session &Session::operator=(const Session &other) { // copy assignment ope
 }
 
 Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), agents(other.agents), infectedQueue(other.infectedQueue) { //move constructors
-
+    clearQueue(other.infectedQueue);
+//    for (Agent* agent: other.agents){
+//        agent = nullptr;
+//    }
+    other.agents.clear();
 }
 
 const Session &Session::operator=(Session &&other) { //move assignment operator
     if (this != &other){
         clearAgents();
-        agents.clear();
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
+        clearQueue(other.infectedQueue);
         agents = other.agents;
+//        for (Agent* agent: other.agents){
+//            agent = nullptr;
+//        }
+        other.agents.clear();
+
     }
     return *this;
 }
 
 void Session::simulate() {
-    while (!g.isAllFullyInfected()) {
+    do {
         int currAgentSize = (int) agents.size();
         for (int i = 0; i < currAgentSize; i++) {
             agents[i]->act(*this);
         }
         cycleNum++;
-    }
+    } while (!g.isAllFullyInfected());
 
     JsonWriter::writeJson(g, g.getSickNodes());
 }
 
 void Session::addAgent(const Agent &agent) {
     Agent *newAgent = agent.clone();
-    agents.push_back(newAgent);
+    addAgent(newAgent);
 }
 
 void Session::addAgent(Agent *agent) {
@@ -106,8 +115,6 @@ void Session::spreadVirus(int oldNode) {
     int nodeToInfect = g.findNodeToInfect(oldNode);
     if (nodeToInfect != -1){
         Agent* newVirus = new Virus(nodeToInfect);
-//        addAgent(*newVirus);
-//      changed the above to the below, saves a memory leak somehow
         addAgent(newVirus);
         infectNode(nodeToInfect);
     }
@@ -138,12 +145,20 @@ void Session::clearAgents() {
     for (Agent *agent : agents) {
         if (agent) delete agent;
     }
+    agents.clear();
 }
 
 void Session::sickenNode(int sickNode) {
     g.sickenNode(sickNode);
     enqueueInfected(sickNode);
 }
+
+void Session::clearQueue(std::queue<int> &q) {
+    while (!q.empty()){
+        q.pop();
+    }
+}
+
 
 
 

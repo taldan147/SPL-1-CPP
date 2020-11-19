@@ -24,6 +24,7 @@ public:
     virtual Tree* clone() const=0;
     void clearChildren();
     virtual ~Tree();
+    const int & getRootLabel() const;
 
 protected:
     int node;
@@ -33,7 +34,7 @@ protected:
 class CycleTree: public Tree{
 public:
     CycleTree(int rootLabel, int currCycle);
-    CycleTree(const CycleTree& other);
+//    CycleTree(const CycleTree& other);
     virtual int traceTree();
     virtual Tree* clone() const;
 private:

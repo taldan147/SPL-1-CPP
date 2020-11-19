@@ -30,7 +30,7 @@ bool Graph::isInfected(int nodeInd) {
     return nodesStatuses[nodeInd] != Clean;
 }
 
-bool Graph::isAllFullyInfected() const {
+bool Graph::isAllFullyInfected() const { // maybe need to check about infected component??
     for (int i = 0; i < size; i++) {
         for (int j = i + 1; j < size; j++) {
             if (edges[i][j] == 1 && nodesStatuses[i] != nodesStatuses[j])
