@@ -9,7 +9,7 @@ Session::Session(const std::string &path) : g({}), cycleNum(0),treeType(Root), a
     jsonReader.getAgents(*this);
 }
 
-//copy cunstructor
+//copy constructor
 Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cycleNum), treeType(other.getTreeType()), agents({}),
                                          infectedQueue(other.getInfectedQueue()) {
     int agentSize = (int) other.agents.size();
@@ -21,7 +21,6 @@ Session::Session(const Session &other) : g(other.getGraph()), cycleNum(other.cyc
 const Session &Session::operator=(const Session &other) { // copy assignment operator
     if (this != &other){
         clearAgents();
-
         g = other.g;
         cycleNum = other.cycleNum;
         treeType = other.treeType;
