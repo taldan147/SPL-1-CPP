@@ -30,20 +30,18 @@ bool Graph::isInfected(int nodeInd) {
     return nodesStatuses[nodeInd] != Clean;
 }
 
-bool Graph::isAllFullyInfected() const { // maybe need to check about infected component??
+bool Graph::isAllFullyInfected() const {
     for (int i = 0; i < size; i++) {
         for (int j = i + 1; j < size; j++) {
-            if (edges[i][j] == 1 && nodesStatuses[i] != nodesStatuses[j])
+            //checks if there are different statuses inside the same connected component or there are still infected (and not sick) nodes
+            if ((edges[i][j] == 1 && nodesStatuses[i] != nodesStatuses[j])
+                || nodesStatuses[i] == Infected || nodesStatuses[j] == Infected)
                 return false;
         }
     }
     return true;
 }
 
-
-sicknessStatus Graph::isSick(Graph *g) {
-    return Clean;
-}
 
 Graph &Graph::disconnectNode(int nodeToDisconnect) {
 

@@ -15,8 +15,6 @@ public:
 
     bool isAllFullyInfected() const;
 
-    sicknessStatus isSick(Graph *g);
-
     void infectNode(int nodeInd);
 
     bool isInfected(int nodeInd);
@@ -33,10 +31,10 @@ public:
 
 
     void sickenNode(int nodeInd);
+
 private:
     std::vector<std::vector<int>> edges;
     int size;
-
 
     std::vector<sicknessStatus> nodesStatuses;
 };

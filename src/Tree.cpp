@@ -28,7 +28,6 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
         clearChildren();
         node = other.node;
         for (Tree *child: other.children) {
-//            Tree *newChild(child);
             addChild(child);
         }
     }
@@ -36,9 +35,6 @@ const Tree &Tree::operator=(const Tree &other) { //copy assignment operator
 }
 
 Tree::Tree(Tree &&other) : node(other.node), children(other.children) { // move constructor
-//    for (Tree* child : other.children){
-//        child = nullptr;
-//    }
     other.children.clear(); // is necessary?!
 }
 
@@ -48,9 +44,6 @@ const Tree &Tree::operator=(Tree &&other) { // move assignment operator
         clearChildren();
         node = other.node;
         children = other.children;
-//        for (Tree* child : other.children){
-//            child = nullptr;
-//        }
         other.children.clear();
     }
     return *this;
@@ -102,7 +95,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     return nullptr;
 }
 
-void Tree::clearChildren() { // delete recursively the Tree
+void Tree::clearChildren() { // delete the Tree recursively
     int size = (int) children.size();
     for (int i = 0; i < size; i++) {
         delete children[i];
@@ -138,9 +131,6 @@ Tree *CycleTree::clone() const {
     return new CycleTree(*this);
 }
 
-//// can we delete this copy constructor??
-//CycleTree::CycleTree(const CycleTree &other) : Tree(other), currCycle(other.currCycle) {}//copy constructor
-
 MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {}
 
 int MaxRankTree::traceTree() {
@@ -165,9 +155,9 @@ Tree *MaxRankTree::clone() const {
     return new MaxRankTree(*this);
 }
 
-RootTree::RootTree(int rootLabel) : Tree(rootLabel) {} //finished
+RootTree::RootTree(int rootLabel) : Tree(rootLabel) {}
 
-int RootTree::traceTree() { // finished
+int RootTree::traceTree() {
     return node;
 }
 

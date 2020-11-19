@@ -6,8 +6,6 @@
 #include "../include/Session.h"
 #include <iostream>
 
-
-
 JsonReader::JsonReader(const std::string &path) : j_() {
     std::string textRead;
     std::string jsonString = "";
@@ -42,7 +40,7 @@ TreeType JsonReader::getType() const {
             break;
         }
     }
-    return  Root;
+    return Root;
 }
 
 Graph JsonReader::getGraph() {
@@ -50,24 +48,24 @@ Graph JsonReader::getGraph() {
     return Graph(matrix);
 }
 
-void JsonReader::getAgents(Session& sess) const {
+void JsonReader::getAgents(Session &sess) const {
     std::vector<std::pair<std::string, int>> agentList = j_["agents"];
     std::vector<Agent *> toReturn;
     for (std::pair<std::string, int> agent: agentList) {
         if (agent.first.compare("V") == 0) {
             sess.addAgent(new Virus(agent.second));
             sess.infectNode(agent.second);
-        }
-        else{
+        } else {
             sess.addAgent(new ContactTracer);
         }
     }
 }
 
-void JsonWriter::writeJson(Graph g, const std::vector<int>& sickNodes) {
-        nlohmann::json output=nlohmann::json{{"graph",g.getEdges()},{"infected",sickNodes}};
+void JsonWriter::writeJson(Graph g, const std::vector<int> &sickNodes) {
+    nlohmann::json output = nlohmann::json{{"graph",    g.getEdges()},
+                                           {"infected", sickNodes}};
     std::ofstream o("./output.json");
-    o << output.dump()<<std::endl;
+    o << output.dump() << std::endl;
 //    std::cout<<output.dump();
     o.close();
 }

@@ -27,7 +27,6 @@ const Session &Session::operator=(const Session &other) { // copy assignment ope
         treeType = other.treeType;
         infectedQueue = other.infectedQueue;
         for (Agent* agent : other.agents){
-            //Agent *newAgent(agent);
             addAgent(agent);
         }
     }
@@ -36,9 +35,6 @@ const Session &Session::operator=(const Session &other) { // copy assignment ope
 
 Session::Session(Session &&other) :g(other.g), cycleNum(other.cycleNum), treeType(other.treeType), agents(other.agents), infectedQueue(other.infectedQueue) { //move constructors
     clearQueue(other.infectedQueue);
-//    for (Agent* agent: other.agents){
-//        agent = nullptr;
-//    }
     other.agents.clear();
 }
 
@@ -51,9 +47,6 @@ const Session &Session::operator=(Session &&other) { //move assignment operator
         infectedQueue = other.infectedQueue;
         clearQueue(other.infectedQueue);
         agents = other.agents;
-//        for (Agent* agent: other.agents){
-//            agent = nullptr;
-//        }
         other.agents.clear();
 
     }

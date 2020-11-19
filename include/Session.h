@@ -25,11 +25,11 @@ public:
 
     Session(const Session &other);// copy constructor
 
-    const Session& operator=(const Session& other); // assignment operator
+    const Session &operator=(const Session &other); // assignment operator
 
     Session(Session &&other); // move constructor
 
-    const Session& operator=(Session&& other); // move assignment operator
+    const Session &operator=(Session &&other); // move assignment operator
 
     void simulate();
 
@@ -61,14 +61,13 @@ public:
 
     void clearAgents();
 
-    void clearQueue(std::queue<int>&);
+    void clearQueue(std::queue<int> &);
 
     void disconnectNode(int node);
+
     ~Session();
 
     void sickenNode(int sickNode);
-
-
 
 private:
     Graph g;
@@ -76,7 +75,6 @@ private:
     TreeType treeType;
     std::vector<Agent *> agents;
     std::queue<int> infectedQueue;
-
 };
 
 class JsonReader {
@@ -100,7 +98,7 @@ public:
 
 class JsonWriter {
 public:
-    static void writeJson(Graph g,const std::vector<int>&);
+    static void writeJson(Graph g, const std::vector<int> &);
 };
 
 #endif
