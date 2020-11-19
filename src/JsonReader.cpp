@@ -66,7 +66,6 @@ void JsonWriter::writeJson(Graph g, const std::vector<int> &sickNodes) {
                                            {"infected", sickNodes}};
     std::ofstream o("./output.json");
     o << output.dump() << std::endl;
-//    std::cout<<output.dump();
     o.close();
 }
 
